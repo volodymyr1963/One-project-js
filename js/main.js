@@ -94,3 +94,41 @@ function generateDescription() {
 //Перевірка коду 
 console.log(photoArray);
 
+
+
+
+// Порожній масив для DOM-елементів мініатюр
+const thumbnails = [];
+
+// Функція для створення DOM-елементу мініатюри
+function createThumbnailElement(photoObject) {
+  const template = document.getElementById('picture');
+  const pictureClone = template.content.cloneNode(true);
+  const imgElement = pictureClone.querySelector('.picture__img');
+  const likesElement = pictureClone.querySelector('.picture__likes');
+  const commentsElement = pictureClone.querySelector('.picture__comments');
+
+  imgElement.src = photoObject.url;
+  likesElement.textContent = photoObject.likes;
+  commentsElement.textContent = photoObject.comments.length;
+
+  // Додатково, можна вставити коментарі або інші дані з photoObject у ваші DOM-елементи
+
+  return pictureClone;
+}
+
+// Функція для відображення всіх мініатюр
+function displayThumbnails() {
+  const fragment = new DocumentFragment();
+  photoArray.forEach((photoObject) => {
+    const thumbnail = createThumbnailElement(photoObject);
+    thumbnails.push(thumbnail);
+    fragment.appendChild(thumbnail);
+  });
+
+  const picturesContainer = document.querySelector('.pictures');
+  picturesContainer.appendChild(fragment);
+}
+
+// Виклик функції для відображення мініатюр
+displayThumbnails();
